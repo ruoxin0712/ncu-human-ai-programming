@@ -1,0 +1,144 @@
+# ==========================================================================
+#  南昌大学 · 人类与人工智能编程  ——  个人作品集仓库忽略规则
+#  说明：本文件告诉 Git 哪些「本地垃圾 / 隐私文件 / 超大文件」不要上传。
+# ==========================================================================
+
+# ---------- 1. 操作系统生成的垃圾文件 ----------
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+desktop.ini
+
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+
+# Linux
+.directory
+.Trash-*
+
+# ---------- 2. 编辑器 / IDE 临时文件 ----------
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+.history/
+
+# ---------- 3. Python 运行与缓存产物 ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+eggs/
+.eggs/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# 虚拟环境（体积大、可随时重建）
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# 依赖清单锁文件之外的缓存目录
+.mypy_cache/
+.dmypy.json
+dmypy.json
+.pyre/
+.pytype/
+.ruff_cache/
+
+# Jupyter / Notebook
+.ipynb_checkpoints/
+profile_default/
+ipython_config_file.py
+
+# ---------- 4. 环境变量与密钥（重要：绝不能上传，含密码） ----------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.yml
+secrets.yaml
+credentials.json
+*_rsa
+*_rsa.pub
+id_rsa*
+
+# ---------- 5. 机器学习模型与数据集（体积巨大，放网盘或 Git LFS） ----------
+# 训练权重
+*.h5
+*.hdf5
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.pb
+*.tflite
+*.safetensors
+*.bin
+*.params
+*.caffemodel
+*.weights
+
+# 数据集
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.rar
+*.7z
+*.csv.gz
+data/raw/
+data/cache/
+
+# ---------- 6. 日志与临时文件 ----------
+*.log
+logs/
+log/
+tmp/
+temp/
+*.pid
+*.bak
+*.orig
+*.swp
+
+# ---------- 7. 实验输出与系统文件 ----------
+outputs/
+output/
+results/
+checkpoints/
+runs/
+wandb/
+mlruns/
+*.out
+*.err
+.DS_Store

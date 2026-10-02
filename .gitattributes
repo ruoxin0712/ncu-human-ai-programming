@@ -1,0 +1,58 @@
+# ==========================================================================
+#  统一换行符规则 —— 避免 Windows / macOS / Linux 之间互相"打架"
+#  说明：Git 只在文本文件里有这个困扰；二进制文件必须标记为 -text。
+# ==========================================================================
+
+# 默认规则：仓库里一律存 LF（换行），检出到 Windows 时再转成 CRLF
+*               text=auto eol=lf
+
+# ---------- Windows 专用脚本：必须是 CRLF + 带 BOM，否则双击不能运行 ----------
+*.bat           text eol=crlf
+*.cmd           text eol=crlf
+*.ps1           text eol=crlf
+
+# ---------- 明确按纯文本处理的类型 ----------
+*.md            text
+*.txt           text
+*.py            text
+*.ipynb         text
+*.json          text
+*.jsonc         text
+*.yml           text
+*.yaml          text
+*.csv           text
+*.xml           text
+*.html          text
+*.css           text
+*.js            text
+*.ts            text
+*.toml          text
+*.cfg           text
+*.ini           text
+*.sh            text eol=lf
+*.gitignore     text
+.gitattributes  text
+
+# ---------- 图片与二进制文件：禁止任何换行符转换 ----------
+*.png           binary
+*.jpg           binary
+*.jpeg          binary
+*.gif           binary
+*.webp          binary
+*.ico           binary
+*.pdf           binary
+*.zip           binary
+*.exe           binary
+*.dll           binary
+*.mp3           binary
+*.mp4           binary
+*.wav           binary
+*.ttf           binary
+*.otf           binary
+*.pt            binary
+*.pth           binary
+*.onnx          binary
+*.h5            binary
+*.npy           binary
+*.npz           binary
+*.pkl           binary
