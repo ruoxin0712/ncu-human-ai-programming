@@ -118,8 +118,8 @@ ncu-human-ai-programming/
 ### 第一次使用（克隆这个仓库到本地）
 
 ```bash
-# 1. 复制仓库地址，替换下面的 <你的GitHub用户名>
-git clone https://github.com/<你的GitHub用户名>/ncu-human-ai-programming.git
+# 1. 复制下面这行地址（首次克隆只需执行一次）
+git clone https://github.com/ruoxin0712/ncu-human-ai-programming.git
 
 # 2. 进入仓库
 cd ncu-human-ai-programming
@@ -161,8 +161,10 @@ git push
 
 | 项目 | 内容 |
 | :--- | :--- |
-| **GitHub** | 待注册后填入（格式：github.com/你的用户名） |
-| **邮箱** | 待注册后填入 |
+| **GitHub** | [github.com/ruoxin0712](https://github.com/ruoxin0712) |
+| **邮箱** | 6108126003@users.noreply.github.com |
+
+> 💡 邮箱使用 GitHub 提供的匿名转发地址，不暴露真实私人邮箱。
 
 ---
 
