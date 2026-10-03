@@ -102,9 +102,9 @@
   }
   #status.paused { background: #ffb648; }
 
-  #hint {
+#hint {
     left: 50%;
-    bottom: 26px;
+    bottom: 122px;
     transform: translateX(-50%);
     padding: 9px 19px;
     border: 1px solid rgba(255, 255, 255, 0.08);
@@ -116,6 +116,99 @@
     white-space: nowrap;
   }
   #hint b { color: var(--cyan); font-weight: 600; }
+
+  #controls {
+    left: 50%;
+    bottom: 24px;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px 20px;
+    max-width: min(94vw, 880px);
+    padding: 14px 20px;
+    border: 1px solid rgba(79, 214, 255, 0.16);
+    border-radius: 11px;
+    background: rgba(14, 15, 22, 0.72);
+    backdrop-filter: blur(7px);
+    pointer-events: auto;
+  }
+  #controls .ctrl {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  #controls label {
+    font-size: 11.5px;
+    letter-spacing: 0.8px;
+    color: var(--dim);
+    white-space: nowrap;
+  }
+  #controls label .unit {
+    font-family: var(--mono);
+    font-style: italic;
+    color: var(--violet);
+  }
+  #controls output {
+    min-width: 62px;
+    font-family: var(--mono);
+    font-size: 11.5px;
+    color: var(--cyan);
+    font-variant-numeric: tabular-nums;
+  }
+  #controls input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 116px;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, rgba(79, 214, 255, 0.5), rgba(139, 124, 255, 0.32));
+    cursor: pointer;
+    outline: none;
+  }
+  #controls input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #eaf6ff;
+    box-shadow: 0 0 8px rgba(79, 214, 255, 0.85);
+    cursor: pointer;
+  }
+  #controls input[type="range"]::-moz-range-thumb {
+    width: 13px;
+    height: 13px;
+    border: none;
+    border-radius: 50%;
+    background: #eaf6ff;
+    box-shadow: 0 0 8px rgba(79, 214, 255, 0.85);
+    cursor: pointer;
+  }
+  #controls input[type="range"]::-moz-range-track {
+    background: transparent;
+  }
+  #controls input[type="range"]:focus-visible {
+    box-shadow: 0 0 0 2px rgba(79, 214, 255, 0.45);
+  }
+  #btnReset {
+    padding: 7px 16px;
+    border: 1px solid rgba(79, 214, 255, 0.4);
+    border-radius: 6px;
+    background: rgba(79, 214, 255, 0.08);
+    color: var(--cyan);
+    font-family: var(--sans);
+    font-size: 11.5px;
+    letter-spacing: 1.2px;
+    cursor: pointer;
+    transition: background 0.15s, box-shadow 0.15s;
+  }
+  #btnReset:hover {
+    background: rgba(79, 214, 255, 0.18);
+    box-shadow: 0 0 12px rgba(79, 214, 255, 0.28);
+  }
+  #btnReset:active { background: rgba(79, 214, 255, 0.3); }
+  #btnReset:focus-visible { outline: 2px solid rgba(79, 214, 255, 0.5); outline-offset: 2px; }
 
   #footer {
     left: 30px;
@@ -141,9 +234,11 @@
   <div class="row"><span>摆角 &theta;</span><span class="val-cyan" id="vTheta">0.00&deg;</span></div>
   <div class="row"><span>角速度 &omega;</span><span id="vOmega">0.000 rad/s</span></div>
   <div class="row"><span>摆长 L</span><span id="vLen">200 px</span></div>
-  <div class="row"><span>重力 g</span><span>9.8 m/s&sup2;</span></div>
+  <div class="row"><span>重力 g</span><span id="vGrav">9.8 m/s&sup2;</span></div>
+  <div class="row"><span>阻尼 b</span><span id="vDamp">0.0030</span></div>
   <div class="divider"></div>
   <div class="row"><span>理论周期 T</span><span id="vPeriod">2.007 s</span></div>
+  <div class="row"><span>衰减时间 &tau;</span><span id="vTau">11.1 s</span></div>
   <div class="row"><span>总能量 E</span><span id="vEnergy">0.00</span></div>
   <div class="row"><span>能量漂移</span><span id="vDrift">0.000 %</span></div>
   <div class="row"><span>仿真时刻 t</span><span id="vTime">0.00 s</span></div>
@@ -152,6 +247,25 @@
 
 <div class="panel" id="hint">
   <b>拖拽</b> 摆球改变摆角 &nbsp;&middot;&nbsp; <b>单击</b> 暂停 / 继续 &nbsp;&middot;&nbsp; <b>R</b> 复位
+</div>
+
+<div class="panel" id="controls">
+  <div class="ctrl">
+    <label for="sLen">摆长 <span class="unit">L</span></label>
+    <input type="range" id="sLen" min="100" max="350" step="1" value="200">
+    <output id="oLen">200 px</output>
+  </div>
+  <div class="ctrl">
+    <label for="sGrav">重力 <span class="unit">g</span></label>
+    <input type="range" id="sGrav" min="1" max="25" step="0.1" value="9.8">
+    <output id="oGrav">9.8</output>
+  </div>
+  <div class="ctrl">
+    <label for="sDamp">阻尼 <span class="unit">b</span></label>
+    <input type="range" id="sDamp" min="0" max="0.01" step="0.0001" value="0.003">
+    <output id="oDamp">0.0030</output>
+  </div>
+  <button id="btnReset" type="button">重置摆动</button>
 </div>
 
 <div class="panel" id="footer">
@@ -163,13 +277,14 @@
   "use strict";
 
   const BG = "#1a1a24";
-  const L_METERS = 1.0;
+  const PX_PER_METER = 200;
   const GRAVITY = 9.8;
   const L_PX_BASE = 200;
   const THETA0 = 45 * Math.PI / 180;
   const SUB_DT = 1 / 600;
   const MAX_FRAME = 0.25;
   const BOB_R = 13;
+  const DAMP_GAIN = 60;
   const CYAN = [79, 214, 255];
   const VIOLET = [139, 124, 255];
 
@@ -184,26 +299,61 @@
     theta: document.getElementById("vTheta"),
     omega: document.getElementById("vOmega"),
     len: document.getElementById("vLen"),
+    grav: document.getElementById("vGrav"),
+    damp: document.getElementById("vDamp"),
     period: document.getElementById("vPeriod"),
+    tau: document.getElementById("vTau"),
     energy: document.getElementById("vEnergy"),
     drift: document.getElementById("vDrift"),
     time: document.getElementById("vTime"),
     status: document.getElementById("status")
   };
 
+  const ui = {
+    len: document.getElementById("sLen"),
+    grav: document.getElementById("sGrav"),
+    damp: document.getElementById("sDamp"),
+    oLen: document.getElementById("oLen"),
+    oGrav: document.getElementById("oGrav"),
+    oDamp: document.getElementById("oDamp"),
+    reset: document.getElementById("btnReset")
+  };
+
   let W = 0, H = 0, dpr = 1;
-  let cx = 0, pivotY = 0, Lpx = L_PX_BASE, gPx = GRAVITY * L_PX_BASE;
+  let cx = 0, pivotY = 0, Lpx = L_PX_BASE, gPx = GRAVITY * PX_PER_METER, gamma = 0;
   let theta = THETA0, omega = 0, t = 0;
   let running = true, dragging = false;
   let acc = 0, last = 0, energy0 = 0;
   let maxTheta = THETA0;
   let bobX = 0, bobY = 0;
+  let omegaNatural = 0, periodTheory = 0;
 
-  const omegaNatural = Math.sqrt(GRAVITY / L_METERS);
-  const periodTheory = 2 * Math.PI / omegaNatural;
+  const params = { len: L_PX_BASE, grav: GRAVITY, damp: 0.003 };
 
   function rgba(c, a) {
     return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")";
+  }
+
+  function maxLength() {
+    return Math.max(60, H - pivotY - 58);
+  }
+
+  function applyParams() {
+    Lpx = Math.min(params.len, maxLength());
+    gPx = params.grav * PX_PER_METER;
+    gamma = DAMP_GAIN * params.damp;
+
+    omegaNatural = Math.sqrt(gPx / Lpx);
+    periodTheory = 2 * Math.PI / omegaNatural;
+
+    el.len.textContent = Math.round(Lpx) + " px";
+    el.grav.textContent = params.grav.toFixed(1) + " m/s\u00B2";
+    el.damp.textContent = params.damp.toFixed(4);
+    el.period.textContent = periodTheory.toFixed(3) + " s";
+    el.tau.textContent = gamma > 0 ? (2 / gamma).toFixed(1) + " s" : "\u221E";
+
+    energy0 = totalEnergy();
+    updateBob();
   }
 
   function layout() {
@@ -223,18 +373,12 @@
     bgCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
     trailCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    const fit = Math.min(1, (H * 0.46) / L_PX_BASE, (W * 0.32) / L_PX_BASE);
-    Lpx = L_PX_BASE * fit;
-    gPx = GRAVITY * Lpx;
     cx = W / 2;
     pivotY = Math.max(H * 0.2, 118);
 
-    el.len.textContent = Math.round(Lpx) + " px";
-    el.period.textContent = periodTheory.toFixed(3) + " s";
-
     paintBackground();
     clearTrail();
-    updateBob();
+    applyParams();
   }
 
   function paintBackground() {
@@ -305,7 +449,7 @@
   }
 
   function step(h) {
-    const alpha = -(gPx / Lpx) * Math.sin(theta);
+    const alpha = -(gPx / Lpx) * Math.sin(theta) - gamma * omega;
     omega += alpha * h;
     theta += omega * h;
     t += h;
@@ -509,7 +653,25 @@
     dragging = false;
     stage.classList.remove("dragging");
     if (stage.hasPointerCapture(e.pointerId)) stage.releasePointerCapture(e.pointerId);
+    energy0 = totalEnergy();
   }
+
+  function bindRange(node, key, readout, format) {
+    node.addEventListener("input", function () {
+      params[key] = parseFloat(node.value);
+      readout.textContent = format(params[key]);
+      applyParams();
+    });
+  }
+
+  bindRange(ui.len, "len", ui.oLen, function (v) { return Math.round(v) + " px"; });
+  bindRange(ui.grav, "grav", ui.oGrav, function (v) { return v.toFixed(1); });
+  bindRange(ui.damp, "damp", ui.oDamp, function (v) { return v.toFixed(4); });
+
+  ui.reset.addEventListener("click", function () {
+    reset();
+    setRunning(true);
+  });
 
   stage.addEventListener("pointerdown", pointerDown);
   stage.addEventListener("pointermove", pointerMove);
