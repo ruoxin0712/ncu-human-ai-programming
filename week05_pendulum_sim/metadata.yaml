@@ -1,0 +1,67 @@
+# ==========================================================================
+#  第 5 周 · 单摆仿真实验 —— 实验元数据
+#  说明：本文件是本实验的「身份证」，供后续脚本读取、供验收核对。
+#        字段一旦写入基线提交即视为实验契约，后续只允许补充、不允许改口。
+# ==========================================================================
+
+experiment:
+  id: "week05-pendulum-sim"
+  title: "单摆阻尼仿真实验"
+  title_en: "Damped Pendulum Simulation"
+  week: 5
+  semester_weeks: 16
+  course: "人类与人工智能编程"
+  institution: "南昌大学（Nanchang University）"
+  module_path: "week05_pendulum_sim/"
+
+author:
+  name: "邓若馨"
+  student_id: "6108126003"
+  major: "自动化"
+  class: "自动化"
+
+workspace:
+  # 无菌（sterile）= 初始化时目录内不含任何实验产物，
+  # 首个提交即基线，后续每一次改动都可独立追溯。
+  sterile: true
+  baseline_commit: "feat(week05): init pendulum experiment workspace"
+  isolation: "root-level dedicated submodule"
+  allow_generated_files: false
+
+environment:
+  os: "Windows"
+  python: "3.12.5"
+  editor: "VS Code 1.139.1"
+  encoding: "PYTHONUTF8=1"
+  line_ending: "LF（由 .gitattributes 统一）"
+
+physics_model:
+  system: "非线性阻尼单摆"
+  equation: "d²θ/dt² = -(g/L)·sin(θ) - b·dθ/dt"
+  method: "数值积分（待实现）"
+  parameters:
+    g: 9.81          # 重力加速度 m/s²
+    L: 1.0           # 摆长 m
+    b: 0.0           # 阻尼系数（初始取 0，退化为理想单摆）
+    theta0: "待填写"  # 初始摆角 rad
+    omega0: 0.0      # 初始角速度 rad/s
+  observables:
+    - "θ(t) 摆角时间序列"
+    - "能量 E(t) = ½·L²·ω² + g·L·(1 - cos θ)"
+    - "相图 (θ, ω) 轨迹"
+
+libraries:
+  required:
+    - "numpy   # 数值数组与向量化计算"
+    - "scipy   # 积分器 solve_ivp"
+    - "matplotlib  # 绘图与相图可视化"
+  status: "待安装确认"
+
+acceptance:
+  - "元数据与本 README 中的姓名、学号一致"
+  - "首条提交仅含工作区初始化文件，无实验产物"
+  - "目录内不含 __pycache__ / .venv / 虚拟环境等本地垃圾"
+  - "git status 干净，可随时回退到基线"
+
+status: "initialized"
+created: "2026-10-03"
